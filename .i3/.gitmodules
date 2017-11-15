@@ -1,0 +1,15 @@
+[submodule "rofi"]
+	path = rofi
+	url = git@github.com:DaveDavenport/rofi.git
+[submodule "i3blocks"]
+	path = i3blocks
+	url = git://github.com/vivien/i3blocks
+[submodule "i3-wm-multi-disp-scripts"]
+	path = i3-wm-multi-disp-scripts
+	url = git@github.com:sainathadapa/i3-project-focus-workflow.git
+[submodule "i3blocks-contrib"]
+	path = i3blocks-contrib
+	url = git@github.com:vivien/i3blocks-contrib.git
+[submodule "quickswitch-for-i3"]
+	path = quickswitch-for-i3
+	url = git@github.com:OliverUv/quickswitch-for-i3.git
