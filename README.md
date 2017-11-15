@@ -1,4 +1,4 @@
-#My i3 ubuntu config
+# My i3 ubuntu config
 ![desktop](1.png)
 ![vim](2.png)
 ![tmux](3.png)
