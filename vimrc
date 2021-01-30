@@ -54,6 +54,11 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'arnaud-lb/vim-php-namespace'
 Plugin 'SirVer/ultisnips'
 Plugin 'tpope/vim-commentary'
+Plugin 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+Plugin 'roxma/LanguageServer-php-neovim',  { 'do': 'composer install && composer run-script parse-stubs' }
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -228,4 +233,4 @@ let g:lightline = {
   \}
   \}
 
-
+autocmd FileType php LanguageClientStart
