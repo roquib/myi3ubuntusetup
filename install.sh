@@ -26,3 +26,12 @@ git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/
 
 # create a symlink
 ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+
+# install vscode 
+sudo apt install software-properties-common apt-transport-https wget
+# Import the Microsoft GPG key
+wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+# add repository
+sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+# install vs-code
+sudo apt install code
