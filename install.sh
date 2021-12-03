@@ -8,12 +8,12 @@ git clone https://github.com/gpakosz/.tmux.git
 ln -s -f .tmux/.tmux.conf
 cp .tmux/.tmux.conf.local .
 cd myi3ubuntusetup
-mv colors ~/.vim/
-mv syntax ~/.vim/
+cp -rf colors ~/.vim/
+cp -rf syntax ~/.vim/
 pip3 install powerline-status
-mv .i3 ~/.i3
-mv .vimrc ~/.vimrc
-mv .zshrc ~/.zshrc
+cp -rf .i3 ~/.i3
+cp -rf vimrc ~/.vimrc
+cp -rf zshrc ~/.zshrc
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 chsh -s /bin/zsh
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
