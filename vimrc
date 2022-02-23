@@ -26,6 +26,7 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 Plugin 'janko/vim-test'
 Plugin 'tpope/vim-rails'
+Plugin 'haishanh/night-owl.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'pangloss/vim-javascript'
@@ -98,7 +99,6 @@ set softtabstop=2
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Procfile,Guardfile,config.ru,*.rake} set ft=ruby
 " Monokai theme
 syntax enable
-colorscheme molokai
 " Allow using ctrl-j k l h to navigate between window splits
 map <C-h> <C-W>h
 map <C-j> <C-W>j
@@ -222,15 +222,12 @@ let g:buffet_left_trunc_icon = "\uf0a8"
 let g:buffet_right_trunc_icon = "\uf0a9"
 
 " lightline
-let g:lightline = {
-  \ 'colorscheme': 'molokai',
-  \ 'enable': {
-  \   'tabline': 0
-  \ },
-  \ 'component_function': {
-  \   'filetype': 'MyFiletype',
-  \   'fileformat': 'MyFileformat',
-  \}
-  \}
+syntax enable
+colorscheme night-owl
 
-autocmd FileType php LanguageClientStart
+" To enable the lightline theme
+let g:lightline = { 'colorscheme': 'nightowl' }
+
+if (has("termguicolors"))
+ set termguicolors
+endif
