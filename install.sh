@@ -92,6 +92,15 @@ nvm install 16
 nvm use 16
 nvm alias default 16
 
+echo "installing protonvpn "
+wget https://protonvpn.com/download/protonvpn-stable-release_1.0.1-1_all.deb
+sudo apt update
+sudo apt-get install protonvpn
+sudo apt install gnome-shell-extension-appindicator gir1.2-appindicator3-0.1
+
+echo "activate vpn after that press any key to start"
+read -k1 -s
+
 npm install -g yarn
 
 echo "installing fzf"
