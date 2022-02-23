@@ -1,4 +1,4 @@
-sudo apt install git vim tmux fonts-font-awesome lm-sensors sysstat i3 i3blocks i3status i3lock i3-wm youtube-dl zsh volumeicon-alsa mpv feh lxappearance nitrogen python3-pip rofi compton dunst
+sudo apt install git vim geary tmux terminator fonts-font-awesome lm-sensors sysstat i3 i3blocks i3status i3lock i3-wm youtube-dl zsh volumeicon-alsa mpv feh lxappearance nitrogen python3-pip rofi compton dunst
 # for vim
 # download vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -109,3 +109,27 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 
 echo "installing expo"
 npm install -g expo-cli
+
+echo "installing github desktop"
+cd ~/Downloads && wget https://github.com/shiftkey/desktop/releases/download/release-2.9.9-linux2/GitHubDesktop-linux-2.9.9-linux2.deb 
+sudo dpkg -i GitHubDesktop-linux-2.9.9-linux2.deb 
+
+echo "installing bitwarden"
+
+wget https://github.com/bitwarden/desktop/releases/download/v1.31.3/Bitwarden-1.31.3-amd64.deb
+sudo dpkg -i Bitwarden-1.31.3-amd64.deb
+
+echo "installing slack"
+wget https://downloads.slack-edge.com/releases/linux/4.23.0/prod/x64/slack-desktop-4.23.0-amd64.deb
+sudo dpkg -i slack-desktop-4.23.0-amd64.deb
+
+echo "installing skype"
+wget https://repo.skype.com/latest/skypeforlinux-64.deb
+sudo dpkg -i skypeforlinux-64.deb
+
+echo "downloading jopline"
+wget https://github.com/laurent22/joplin/releases/download/v2.6.10/Joplin-2.6.10.AppImage
+
+
+
+
