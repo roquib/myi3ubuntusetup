@@ -146,3 +146,7 @@ wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsM
 wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Ubuntu/Regular/UbuntuNerdFont-Regular.ttf
 
 fc-cache -vf ~/.local/share/fonts && cd 
+
+
+echo "installing rust"
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
