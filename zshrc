@@ -1,40 +1,10 @@
-# export functions
-export FPATH=/usr/share/zsh/5.8.1/functions:$FPATH
-# Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
-
-# Comment this out to disable weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git git-auto-fetch git-escape-magic git-extras git-flow git-flow-avh git-hubflow git-prompt gitignore git-lfs history laravel minikube node npm nvm tmux yarn yum zsh-interactive-cd zsh-navigation-tools docker docker-compose dnf flutter fzf kubectl zsh-syntax-highlighting zsh-autosuggestions cp gitfast vim-interaction vi-mode)
 source $ZSH/oh-my-zsh.sh
 
-# Customize to your needs...
 export EDITOR="nvim"
 export TERMINAL="gnome-terminal"
 export BROWSER="google-chrome-stable"
@@ -75,7 +45,10 @@ function stopDocker()
   sudo systemctl stop docker.socket
 }
 
-JAVA_HOME=/usr/lib/jvm/java-17-openjdk-17.0.2.0.8-6.fc36.x86_64
+echo "install java 17"
+sudo apt install openjdk-17-jdk
+
+JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 PATH=$PATH:$JAVA_HOME/bin
 #export=$PATH:$HOME/.local/bin
 export JAVA_HOME
@@ -122,7 +95,7 @@ alias l="ls -laF"
 
 #export http_proxy=http://103.147.163.93:80
 #export https_proxy=http://103.147.163.93:80
-export no_proxy=localhost,127.0.0.1
+#export no_proxy=localhost,127.0.0.1
 
 # android config
 export ANDROID_HOME=$HOME/Android/Sdk
