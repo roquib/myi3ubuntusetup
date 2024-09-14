@@ -1,10 +1,7 @@
 sudo apt install git vim tmux terminator fonts-font-awesome lm-sensors sysstat i3 i3blocks i3status i3lock i3-wm zsh volumeicon-alsa mpv feh lxappearance nitrogen python3-pip rofi compton dunst
 
-git clone https://github.com/gpakosz/.tmux.git
-ln -s -f .tmux/.tmux.conf
-cp .tmux/.tmux.conf.local .
-
-cp -rf .i3 ~/.i3
+mkdir ~/.config/tmux
+cp -rf tmux.conf ~/.config/tmux/ 
 cp -rf zshrc ~/.zshrc
 
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
@@ -38,43 +35,10 @@ sudo apt install -y php8.2 php8.2-mbstring php8.2-zip php8.2-gd php8.2-curl php8
 echo "installing composer"
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
-echo 'Installing mysql server'
-
-sudo apt install -y mysql-server
-
-sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';FLUSH PRIVILEGES;"
-
-echo "Installing laravel valet"
-composer global require cpriego/valet-linux
-
-echo "Installing dependency of valet "
-sudo apt-get install network-manager libnss3-tools jq xsel
-valet install
-
-echo "Installing phpmyadmin"
-
-DATA="$(wget https://www.phpmyadmin.net/home_page/version.txt -q -O-)"
-URL="$(echo $DATA | cut -d ' ' -f 3)"
-VERSION="$(echo $DATA | cut -d ' ' -f 1)"
-wget https://files.phpmyadmin.net/phpMyAdmin/${VERSION}/phpMyAdmin-${VERSION}-all-languages.tar.gz
-
-tar xvf phpMyAdmin-${VERSION}-all-languages.tar.gz
-
-mkdir ~/Sites
-mkdir ~/Sites/phpmyadmin
-mv phpMyAdmin-*/* ~/Sites/phpmyadmin
-
-cd ~/Sites && valet park && cd
-
-curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
-
 echo "installing node"
-nvm install 20
-nvm use 20
-nvm alias default 20
-
-sudo apt install gnome-shell-extension-appindicator gir1.2-appindicator3-0.1
-
+nvm install 22
+nvm use 22
+nvm alias default 22
 npm install -g yarn expo-cli pnpm live-server 
 
 echo "installing fzf"
@@ -82,15 +46,9 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
 echo "installing github desktop"
-cd ~/Downloads && wget https://github.com/shiftkey/desktop/releases/download/release-3.3.12-linux2/GitHubDesktop-linux-amd64-3.3.12-linux2.deb
-sudo dpkg -i GitHubDesktop-linux-amd64-3.3.12-linux2.deb
-rm -rf GitHubDesktop-linux-amd64-3.3.12-linux2.deb
-
-echo "installing bitwarden"
-
-wget https://github.com/bitwarden/desktop/releases/download/v2022.5.1/Bitwarden-2022.5.1-amd64.deb
-sudo dpkg -i Bitwarden-2022.5.1-amd64.deb
-rm -rf Bitwarden-2022.5.1-amd64.deb
+cd ~/Downloads && wget https://github.com/shiftkey/desktop/releases/download/release-3.4.3-linux1/GitHubDesktop-linux-amd64-3.4.3-linux1.deb
+sudo dpkg -i GitHubDesktop-linux-amd64-3.4.3-linux1.deb
+rm -rf GitHubDesktop-linux-amd64-3.4.3-linux1.deb
 
 echo "installing slack"
 wget https://downloads.slack-edge.com/releases/linux/4.23.0/prod/x64/slack-desktop-4.23.0-amd64.deb
@@ -103,7 +61,6 @@ sudo dpkg -i skypeforlinux-64.deb
 rm -rf skypeforlinux-64.deb
 
 echo "installing jopline"
-sudo apt install libfuse2
 wget -O - https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh | bash
 
 
