@@ -1,7 +1,7 @@
 ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="robbyrussell"
-HOMEPATH="/home/abdur-roquib-pramanik/laravel-docker"
+HOMEPATH="/home/roquib/laravel-docker"
 
 plugins=(git git-auto-fetch git-escape-magic git-extras git-flow git-flow-avh git-hubflow git-prompt gitignore git-lfs history laravel minikube node npm nvm tmux yarn yum zsh-interactive-cd zsh-navigation-tools docker docker-compose dnf flutter fzf kubectl zsh-syntax-highlighting zsh-autosuggestions cp gitfast vim-interaction vi-mode)
 source $ZSH/oh-my-zsh.sh
@@ -23,20 +23,25 @@ export PATH="$HOME/.local/bin:$PATH"
 alias sail='bash vendor/bin/sail'
 
 function stopService()
-{
-  echo "Stopping mysql, apache2, nginx, redis\n"
-  sudo systemctl stop mysql.service
-  # sudo systemctl stop apache2.service
-  sudo systemctl stop nginx.service
-  sudo systemctl stop redis-server.service
+{ nginx_active=$(is_active nginx)
+  if [[ "$nginx_active" == "active" ]]; then
+    echo "Stopping mysql, apache2, nginx, redis\n"
+    sudo systemctl stop mysql.service
+    # sudo systemctl stop apache2.service
+    sudo systemctl stop nginx.service
+    sudo systemctl stop redis-server.service
+  fi
 }
 
 function startService()
 {
-  echo "Starting mysql, nginx, redis\n"
-  sudo systemctl start mysql.service
-  sudo systemctl start nginx.service
-  sudo systemctl start redis-server.service
+  nginx_active=$(is_active nginx)
+  if [[ "$nginx_active" != "active" ]]; then
+    echo "Starting mysql, nginx, redis\n"
+    sudo systemctl start mysql.service
+    sudo systemctl start nginx.service
+    sudo systemctl start redis-server.service
+  fi
 }
 
 function status()
@@ -74,23 +79,25 @@ function startLaradock()
   echo "Starting laradock\n"
   current_dir=$(pwd)
   cd $HOMEPATH/laradock
-  stopService
 
-  echo "Stopping Services\n"
   mysql_active=$(is_active mysql)
-  echo "mysql: $mysql_active\n"
-  nginx_active=$(is_active nginx)
-  echo "nginx: $nginx_active\n"
-  redis_server_active=$(is_active mysql)
-  echo "redis-server: $redis_server_active\n"
-  echo "Starting Laradock\n"
+  if [[ "$mysql_active" == "active" ]]; then
+    stopService
+    echo "Stopping Services\n"
+    mysql_active=$(is_active mysql)
+    echo "mysql: $mysql_active\n"
+    nginx_active=$(is_active nginx)
+    echo "nginx: $nginx_active\n"
+    redis_server_active=$(is_active mysql)
+    echo "redis-server: $redis_server_active\n"
+  fi
   if ss -tuln | grep -q ':3306'; then
     docker compose up -d apache2 php-fpm workspace
   else
     docker compose up -d apache2 phpmyadmin php-fpm workspace
   fi
-  docker compose stop mysql
-  docker compose up -d mariadb
+  # docker compose stop mysql
+  # docker compose up -d mariadb
   docker compose ps
   cd $current_dir
 }
@@ -150,12 +157,12 @@ function create_host()
   cd "$HOMEPATH/laradock"
 
   # Check if the database exists
-  DB_EXISTS=$(docker compose exec -T mariadb mariadb -u"$DB_USER" -p"$DB_PASSWORD" -e "SHOW DATABASES LIKE '$DB_NAME';" | grep "$DB_NAME" > /dev/null; echo "$?")
+  DB_EXISTS=$(docker compose exec -T mysql mysql -u"$DB_USER" -p"$DB_PASSWORD" -e "SHOW DATABASES LIKE '$DB_NAME';" | grep "$DB_NAME" > /dev/null; echo "$?")
 
   if [ $DB_EXISTS -eq 0 ]; then
     echo "Database $DB_NAME already exists."
   else
-    docker compose exec -T mariadb mariadb  -u$DB_USER -p$DB_PASSWORD -e "CREATE DATABASE $DB_NAME;"
+    docker compose exec -T mysql mysql -u$DB_USER -p$DB_PASSWORD -e "CREATE DATABASE $DB_NAME;"
     echo "Database $DB_NAME created successfully."
   fi
 
@@ -176,8 +183,8 @@ EOL
   ENV_FILE="${PROJECT_PATH}/.env"
   if [ -f $ENV_FILE ]; then
     sed -i "s/^APP_URL=.*/APP_URL=http:\/\/$ARGUMENT.test/" "$ENV_FILE"
-    sed -i "s/^DB_CONNECTION=.*/DB_CONNECTION=mariadb/" "$ENV_FILE"
-    sed -i "s/^DB_HOST=.*/DB_HOST=mariadb/" "$ENV_FILE"
+    sed -i "s/^DB_CONNECTION=.*/DB_CONNECTION=mysql/" "$ENV_FILE"
+    sed -i "s/^DB_HOST=.*/DB_HOST=mysql/" "$ENV_FILE"
     sed -i "s/^DB_PASSWORD=.*/DB_PASSWORD=root/" "$ENV_FILE"
   fi
   chmod -R 777 "${HOMEPATH}/$ARGUMENT/storage/"
@@ -231,9 +238,32 @@ function stopLaradock()
   cd $current_dir
 }
 
+function ldock()
+{
+  ARGUMENT=$1;
+  if [[ "$ARGUMENT" == "" ]]; then
+    cd $HOMEPATH/laradock
+  else 
+    cd $HOMEPATH/$ARGUMENT
+  fi
+
+}
+
+function lbash()
+{
+  ARGUMENT=$1;
+  if [[ "$ARGUMENT" == "" ]]; then
+    ldock && docker compose exec workspace bash
+  else 
+    cd $HOMEPATH/laradock && docker compose exec $ARGUMENT bash
+  fi
+}
 
 
-JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+
+
+
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 PATH=$PATH:$JAVA_HOME/bin
 #export=$PATH:$HOME/.local/bin
 export JAVA_HOME
@@ -293,3 +323,5 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH="$PATH:$HOME/.config/flutter/bin"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+alias luamake="/home/roquib/Github/lua-language-server/3rd/luamake/luamake"
